@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../utils/app_theme.dart';
 import '../widgets/menu_button.dart';
 import 'input.dart';
+import 'history.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -57,7 +58,10 @@ class HomeScreen extends StatelessWidget {
                     icon: Icons.history,
                     label: 'Loan\nHistory',
                     color: AppColors.primaryLight,
-                    onTap: () => _comingSoon(context, 'Loan History'),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const LoanHistoryScreen()),
+                    ),
                   ),
                   MenuButton(
                     icon: Icons.info_outline,

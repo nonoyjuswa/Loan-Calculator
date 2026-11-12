@@ -3,15 +3,18 @@ import 'package:share_plus/share_plus.dart';
 import '../models/loan_record.dart';
 import '../utils/app_theme.dart';
 import '../utils/formatters.dart';
+import '../services/history_service.dart';
 
 class LoanResultScreen extends StatelessWidget {
   final LoanRecord record;
-  const LoanResultScreen({super.key, required this.record});
+  final bool canSave;
+  const LoanResultScreen({super.key, required this.record, this.canSave = true});
 
-  void _save(BuildContext context) {
-    // Real saving comes in Step 8
+  Future<void> _save(BuildContext context) async {
+    await HistoryService.add(record);
+    if (!context.mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Save coming in Step 8')),
+      const SnackBar(content: Text('Saved to history')),
     );
   }
 
@@ -116,17 +119,19 @@ class LoanResultScreen extends StatelessWidget {
             const SizedBox(height: 20),
             Row(
               children: [
-                Expanded(
-                  child: OutlinedButton.icon(
-                    onPressed: () => _save(context),
-                    icon: const Icon(Icons.download),
-                    label: const Text('Save'),
-                    style: OutlinedButton.styleFrom(
-                      minimumSize: const Size.fromHeight(48),
+                if (canSave) ...[
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      onPressed: () => _save(context),
+                      icon: const Icon(Icons.download),
+                      label: const Text('Save'),
+                      style: OutlinedButton.styleFrom(
+                        minimumSize: const Size.fromHeight(48),
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 12),
+                  const SizedBox(width: 12),
+                ],
                 Expanded(
                   child: ElevatedButton.icon(
                     onPressed: _share,
