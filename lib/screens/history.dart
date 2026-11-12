@@ -73,27 +73,60 @@ class _LoanHistoryScreenState extends State<LoanHistoryScreen> {
                         setState(() => _records.removeAt(i));
                       },
                       child: Card(
-                        child: ListTile(
-                          leading: const Icon(Icons.calendar_month,
-                              color: AppColors.primary),
-                          title: Text(
-                            formatDate(r.date),
-                            style:
-                                const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          subtitle: Text(
-                            '${formatPeso(r.loanAmount)}  |  ${r.months} mos\n'
-                            'Monthly: ${formatPeso(r.monthlyPayment)}',
-                          ),
-                          isThreeLine: true,
-                          trailing: const Icon(Icons.chevron_right),
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(12),
                           onTap: () => Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (_) => LoanResultScreen(
-                                record: r,
-                                canSave: false,
-                              ),
+                              builder: (_) => LoanResultScreen(record: r, canSave: false),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(14),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Icon(Icons.calendar_month, color: AppColors.primary),
+                                const SizedBox(width: 12),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        formatDate(r.date),
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 4),
+                                      Text('${formatPeso(r.loanAmount)}  |  ${r.months} mos'),
+                                      const SizedBox(height: 8),
+                                      Center(
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 20,
+                                            vertical: 6,
+                                          ),
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xFFE6D9FF),
+                                            borderRadius: BorderRadius.circular(20),
+                                          ),
+                                          child: Text(
+                                            formatPeso(r.monthlyPayment),
+                                            style: const TextStyle(
+                                              color: AppColors.primary,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                const Icon(Icons.chevron_right),
+                              ],
                             ),
                           ),
                         ),
