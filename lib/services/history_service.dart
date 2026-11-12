@@ -25,4 +25,9 @@ class HistoryService {
     if (index < raw.length) raw.removeAt(index);
     await prefs.setStringList(_key, raw);
   }
+
+  static Future<void> clear() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_key);
+  }
 }

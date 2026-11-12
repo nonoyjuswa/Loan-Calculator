@@ -3,15 +3,10 @@ import '../utils/app_theme.dart';
 import '../widgets/menu_button.dart';
 import 'input.dart';
 import 'history.dart';
+import 'settings.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
-
-  void _comingSoon(BuildContext context, String name) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('$name coming soon')),
-    );
-  }
 
   void _showAbout(BuildContext context) {
     showAboutDialog(
@@ -73,7 +68,10 @@ class HomeScreen extends StatelessWidget {
                     icon: Icons.settings,
                     label: 'Settings',
                     color: AppColors.green,
-                    onTap: () => _comingSoon(context, 'Settings'),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const SettingsScreen()),
+                    ),
                   ),
                 ],
               ),
